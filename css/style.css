@@ -1,0 +1,50 @@
+/*CSS*/
+/* ***** */
+/* ИМПОРТИРУЕМОЕ */
+/* импортируем необходимые шрифты */
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"); */
+/* Подключаем Roboto с Google Fonts для остального текста @import url("https://googleapis.com"); */
+/* Подключаем Cooper Black с CDNFonts для логотипа @import url("https://cdnfonts.com"); */
+
+/* ***** */
+/* ПО ТЭГАМ */
+/* общее для всего сайта */
+body {
+  /* обнуляем внешнии отступы */
+  margin: 0;
+  /* задаём шрифт font-family: "Roboto", sans-serif;*/
+
+  font-size: 16px;
+  font-style: normal;
+  font-family: "Roboto", sans-serif;
+  /* цвет шрифта */
+  color: #000000;
+  /* color: #ffffff; */
+
+  /* задаём цвет фона */
+  /* background-color: #efefee; */
+  /* background-color: #e5e5e5; */
+  /* background-color: #e7e7e7; */
+  /* background-color: #f3f3f3; */
+  background-color: #979797;
+  /* background-color: #2a2a2a; */
+}
+/* ***** */
+/* ПО КЛАССАМ */
+/* ***** */
+/* отключение и чтобы его нельзя было перебить */
+.none {
+  display: none !important;
+}
+/* общий для всего саайта */
+.container {
+  /* размер контейнера согласно макету 1370px + 30px (по 15px с обоих сторон, итого получим:) */
+  max-width: 1400px;
+  min-width: 320px;
+  /* центруем контейнер */
+  margin: 0 auto;
+  /* отступ при сжатии странички (адаптив) */
+  padding: 0 15px;
+}
+/* ***** */
+/* END */
