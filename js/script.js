@@ -169,6 +169,86 @@ if (web3Form) {
   });
 }
 
+// КОНТАКТЫ, НОМЕР, ПОЧТА, ТЕЛЕГРАММ, МАКС
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Анимация появления карточек при скролле
+  const animatedCards = document.querySelectorAll(".contact-card[data-animate]");
+
+  if (animatedCards.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target); // Анимируем один раз
+          }
+        });
+      },
+      {
+        threshold: 0.15, // Сработает, когда видно 15% карточки
+      },
+    );
+
+    animatedCards.forEach((card) => observer.observe(card));
+  }
+
+  // 2. Копирование контактов и всплывающее уведомление (Toast)
+  const copyButtons = document.querySelectorAll(".contact-card__copy");
+
+  // Создаем элемент уведомления один раз
+  const toast = document.createElement("div");
+  toast.className = "contacts-toast";
+  document.body.appendChild(toast);
+
+  let toastTimeout;
+
+  const showToast = (message) => {
+    toast.textContent = message;
+    toast.classList.add("is-show");
+
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove("is-show");
+    }, 2500);
+  };
+
+  // Иконки для переключения состояния кнопки
+  const copyIconSVG = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </svg>
+  `;
+
+  const checkIconSVG = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  `;
+
+  copyButtons.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const textToCopy = btn.dataset.copy;
+      if (!textToCopy) return;
+
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        btn.classList.add("is-copied");
+        btn.innerHTML = checkIconSVG;
+        showToast(`Скопировано: ${textToCopy}`);
+
+        setTimeout(() => {
+          btn.classList.remove("is-copied");
+          btn.innerHTML = copyIconSVG;
+        }, 2000);
+      } catch (err) {
+        showToast("Не удалось скопировать");
+      }
+    });
+  });
+});
+
+
 // МОДАЛЬНОЕ ОКНО ПОЛИТИКИ КОНФИДЕНЦИАЛЬНОСТИ 
 const privacyModal = document.getElementById("privacy-modal");
 const openModalBtn = document.getElementById("open-privacy-modal");
